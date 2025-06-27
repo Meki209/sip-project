@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    nav {
+      width: 100%;
+      background: #400004;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      width: 80px;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .menu {
+      display: flex;
+      gap: 15px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 8px 15px;
+    }
+
+    .menu a:nth-last-child(2),.menu label.logout-label {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      background: #e74c3c;
+      cursor: pointer;
+    }
+
+    .menu a:hover,
+    .menu label.logout-label:hover {
+      background: aqua;
+      color: black;
+      transition: 0.4s;
+    }
+
+
+
+
+        /* Confirm box styles */
+    #confirm-toggle {
+      display: none;
+    }
+
+    .confirm-box {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    #confirm-toggle:checked + .confirm-box {
+      display: flex;
+    }
+
+    .confirm-content {
+      background: #400004;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .confirm-content p {
+      margin-bottom: 20px;
+    }
+
+    .confirm-buttons {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .confirm-buttons a,
+    .confirm-buttons label {
+      background: #e74c3c;
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .confirm-buttons label {
+      background: gray;
+    }
+
+    .confirm-buttons a:hover,
+    .confirm-buttons label:hover {
+      opacity: 0.8;
+    }
+
+    .menu a:hover {
+      background: aqua;
+      color: black;
+      border-radius: 5px;
+      transition: 0.4s;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #400004;
+        padding: 10px 0;
+      }
+
+      .menu.active {
+        display: flex;
+      }
+    }
+
+
+    .container {
+      margin-top: 120px;
+      padding: 10px;
+      min-height: 100vh;
+      background-color: #ddd;
+    }
+
+    .container h1 {
+      font-size: 40px;
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .image-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .image-container .image {
+      height: 350px;
+      width: 350px;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    .image-container .image img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: 0.3s;
+      border-radius: 10px;
+    }
+
+    .image-container .image:hover img {
+      transform: scale(1.1);
+    }
+
+    .popup-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.9);
+      height: 100%;
+      width: 100%;
+      display: none;
+      z-index: 999;
+    }
+
+    .popup-image img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-height:100%;
+      max-width: 750px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .popup-image .close-btn {
+      position: absolute;
+      top: 100px;
+      right: 350px;
+      font-size: 45px;
+      color: white;
+      cursor: pointer;
+      z-index: 1001;
+      transition: 0.3s ease;
+    }
+
+    .popup-image .close-btn:hover {
+      color: red;
+      transform: scale(1.2);
+    }
+    .video-container {
+      margin-top: -1%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .video-container .video {
+      height: 350px;
+      width: 350px;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    .video-container .video source {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: 0.3s;
+      border-radius: 10px;
+    }
+
+    .video-container .video:hover source {
+      transform: scale(1.1);
+    }
+    @media(max-width: 768px) {
+      .popup-image img {
+        width: 95%;
+      }
+    }
+    footer 
+        {
+            background-color: #400000;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">
+      <img src="SIP Images/Image2.jpg" alt="logo" width="100px"/>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="menu" id="navMenu">
+      <a href="Home.html">Home</a>
+      <a href="History.html">History</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="About Us.html">About Us</a>
+      <a href="Contect.html">Contact</a>
+      <a href="Login And Regi.html">Login</a>
+      <!-- Logout using label and checkbox -->
+        <label for="confirm-toggle" class="logout-label">Logout</label>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hidden checkbox -->
+  <input type="checkbox" id="confirm-toggle" />
+
+  <!-- Confirm box -->
+  <div class="confirm-box">
+    <div class="confirm-content">
+      <p>Are you sure you want to logout?</p>
+      <div class="confirm-buttons">
+        <a href="Landing Page.html">Yes</a>
+        <label for="confirm-toggle">Cancel</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="container">
+    <h1>Gallery</h1>
+    <div class="image-container">
+        <div class="image"><img src="SIP Images/Image6.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image5.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image7.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image1.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image19.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image11.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image3.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image8.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image10.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image18.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image15.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image16.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image17.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image11.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image9.jpg" alt=""></div>
+        <div class="image"><img src="SIP Images/Image4.jpg" alt=""></div>
+  </div>
+  </div>
+
+      <div class="container">
+    <h1>Videos</h1>
+    <div class="video-container">
+        <video width="360px" height="300px"controls>
+        <source src="SIP Images/Run.mp4" type="video/mp4">
+      </video>
+      <video width="360px" height="300px"controls>
+        <source src="SIP Images/BlackSwan.mp4" type="video/mp4">
+      </video>
+      <video width="360px" height="300px"controls>
+        <source src="SIP Images/FackLove.mp4" type="video/mp4">
+      </video>
+      <video width="360px" height="300px" controls>
+        <source src="SIP Images/SpringDay.mp4" type="video/mp4">
+      </video>
+      <video width="360px" height="300px" controls>
+        <source src="SIP Images/Butter.mp4">
+      </video>
+      <video width="360px" height="300px"controls>
+        <source src="SIP Images/Danger.mp4" type="video/mp4">
+      </video>
+      <video width="360px" height="300px" controls>
+        <source src="SIP Images/Dynemite.mp4" type="video/mp4">
+      </video>
+      <video width="360px" height="300px" controls>
+        <source src="SIP Images/I Need You.mp4">
+      </video>
+      </div>
+  </div>
+
+  <!-- POPUP IMAGE -->
+  <div class="popup-image" id="popupImage">
+    <span class="close-btn" onclick="closePopup()">&times;</span>
+    <img src="" id="popupImg" alt="popup" />
+  </div>
+
+  <footer>
+    &copy; 2025 FLY Emtertainment | Privacy Policy | All rights reserved. 
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    function toggleMenu() {
+      const navMenu = document.getElementById("navMenu");
+      navMenu.classList.toggle("active");
+    }
+
+    // Show popup
+    document.querySelectorAll('.image-container img').forEach(image => {
+      image.onclick = () => {
+        document.getElementById("popupImage").style.display = "block";
+        document.getElementById("popupImg").src = image.src;
+      };
+    });
+
+    // Close popup
+    function closePopup() {
+      document.getElementById("popupImage").style.display = "none";
+    }
+
+    // Close on ESC key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === "Escape") {
+        closePopup();
+      }
+    });
+  </script>
+
+</body>
+</html>

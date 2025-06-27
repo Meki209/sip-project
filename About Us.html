@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    nav {
+      width: 100%;
+      background: #400004;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      width: 80px;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .menu {
+      display: flex;
+      gap: 15px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 8px 15px;
+    }
+.menu a:nth-last-child(2),.menu label.logout-label {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      background: #e74c3c;
+      cursor: pointer;
+    }
+
+    .menu a:hover,
+    .menu label.logout-label:hover {
+      background: aqua;
+      color: black;
+      transition: 0.4s;
+    }
+
+
+
+
+        /* Confirm box styles */
+    #confirm-toggle {
+      display: none;
+    }
+
+    .confirm-box {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    #confirm-toggle:checked + .confirm-box {
+      display: flex;
+    }
+
+    .confirm-content {
+      background: #400004;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .confirm-content p {
+      margin-bottom: 20px;
+    }
+
+    .confirm-buttons {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .confirm-buttons a,
+    .confirm-buttons label {
+      background: #e74c3c;
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .confirm-buttons label {
+      background: gray;
+    }
+
+    .confirm-buttons a:hover,
+    .confirm-buttons label:hover {
+      opacity: 0.8;
+    }
+    .menu a:hover {
+      background: aqua;
+      color: black;
+      border-radius: 5px;
+      transition: 0.4s;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #400004;
+        padding: 10px 0;
+      }
+
+      .menu.active {
+        display: flex;
+      }
+    }
+
+    .section {
+      margin-top: 120px;
+      font-size: 1.4rem;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .section h2 {
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .section h3 {
+      font-size: 25px;
+    }
+
+    section ul li {
+      margin-left: 20px;
+    }
+
+    .history-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .history-image {
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+    }
+
+    .history-image img,
+    .history-image video {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .history-text {
+      flex: 2;
+      min-width: 200px;
+    }
+
+    .history-text h3 {
+      text-align: left;
+      font-size: 1.2em;
+      color: #fff;
+    }
+
+    .history-text p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table th,
+    table td {
+      border: 1px solid white;
+      padding: 10px;
+      text-align: left;
+    }
+
+    table th {
+      color: aqua;
+      font-size: x-large;
+    }
+
+    table td {
+      color: red;
+    }
+
+
+    .section_container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .section_container h2 {
+      font-size: 3rem;
+      font-weight: 600;
+      color: #149e9e;
+    }
+
+    .section_container h1 {
+      position: relative;
+      margin-bottom: 2rem;
+      font-size: 2.9rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .section_container h1::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 5rem;
+      height: 2px;
+      background-color: #149e9e;
+    }
+
+    .section_grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .section_grid .section_card {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 5rem 2rem 2rem;
+      background-color: #ffffff;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+      transition: 0.4s;
+    }
+
+    .section_grid .section_card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 75%;
+      transform: translate(-50%, -50%);
+      aspect-ratio: 1;
+      border-radius: 100%;
+      background-color: #25c0c0;
+      z-index: -1;
+      transition: 0.5s;
+    }
+
+    .section_card span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 1rem;
+      font-size: 3rem;
+      color: #ffffff;
+      z-index: 1000;
+    }
+
+    .section_card h4 {
+      margin-top: 4rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: #1f2121;
+      transition: 0.3s;
+    }
+
+    .section_card p {
+      margin-bottom: 2rem;
+      color: #5a5858;
+      transition: 0.3s;
+    }
+
+    .section_card p:hover {
+      color: #fff;
+    }
+
+    .section_card img {
+      margin-bottom: 1rem;
+      max-width: 110px;
+      height: 110px;
+      border: 2px solid #108787;
+      border-radius: 100%;
+      transition: 0.3s;
+    }
+
+    .section_card h5 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #149e9e;
+      transition: 0.3s;
+    }
+
+    .section_card h6 {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #1e5cb4;
+      transition: 0.3s;
+    }
+
+    .section_card:hover::before {
+      width: 400%;
+    }
+
+    .section_card:hover:is(p, h5) {
+      color: #0c2fae;
+    }
+
+    .section_card:hover:is(p, h6) {
+      color: #092aa3;
+    }
+
+    .section_card:hover img {
+      border-color: #fff;
+    }
+
+    /* ✅ Responsive Media Queries */
+    @media (max-width: 992px) {
+      .section_grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section_grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section_container h1 {
+        font-size: 2rem;
+      }
+
+      .section_container h2 {
+        font-size: 1.2rem;
+      }
+    }
+
+    footer {
+      background-color: #400000;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">
+        <img src="SIP Images/Image2.jpg" alt="FLY Logo">
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="menu" id="navMenu">
+        <a href="Home.html">Home</a>
+        <a href="History.html">History</a>
+        <a href="Gallery.html">Gallery</a>
+        <a href="About Us.html">About Us</a>
+        <a href="Contect.html">Contact</a>
+        <a href="Login And Regi.html">Login</a>
+        <!-- Logout using label and checkbox -->
+        <label for="confirm-toggle" class="logout-label">Logout</label>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hidden checkbox -->
+  <input type="checkbox" id="confirm-toggle" />
+
+  <!-- Confirm box -->
+  <div class="confirm-box">
+    <div class="confirm-content">
+      <p>Are you sure you want to logout?</p>
+      <div class="confirm-buttons">
+        <a href="Landing Page.html">Yes</a>
+        <label for="confirm-toggle">Cancel</label>
+      </div>
+    </div>
+  </div>
+
+  <section id="history" class="section history-section">
+    <h2>About Us</h2>
+    <h2>Our Core Goals & Focus Areas :-</h2>
+
+    <div class="history-container">
+      <div class="history-image">
+        <video width="360px" height="300px"controls>
+        <source src="SIP Images/FackLove.mp4" type="video/mp4">
+      </video>
+      <img src="SIP Images/Image15.jpg" alt="FLY History Image">
+      <br><br>
+      <video width="360px" height="300px" controls>
+        <source src="SIP Images/BlackSwan.mp4" type="video/mp4">
+      </video>
+      <img src="SIP Images/Image19.jpg" alt="">
+      
+      </div>
+
+     <div class="history-text">
+      <h3>1.  Promoting Self-Love and Self-Acceptance :-</h3><br>
+      <p>
+        Campaign: “Love Yourself” Message: Accept your flaws, pain, and identity. This is a consistent theme in their lyrics, albums, and public speeches.💬 RM (UN speech): <br><br> <h6 style="color: white;font-size: 25px;"> “No matter who you are, where you're from, your skin color, gender identity: speak yourself.”</h6>
+      </p><br>
+
+      <h3>2. Youth Empowerment & Social Awareness :-</h3><br>
+      <p>
+        “Love Myself” Campaign with UNICEF (Since 2017) Aim: To inspire young people around the world to: Fight against bullying Accept mental health challenges Believe in their dreams💡 This campaign promotes a violence-free and self-loving society for youth.
+      </p><br>
+
+      <h3>3. Raising Mental Health Awareness :-</h3><br>
+      <p>
+        FLY openly talks about anxiety, depression, loneliness: SUGA shared his personal experiences with depression and therapy. RM opened up about self-doubt and pressure. Songs like “The Last,” “Blue & Grey,” “Tomorrow” deeply express emotional struggles.
+      </p><br>
+
+      <h3>4.  Artistic Growth & Authentic Music :-</h3><br>
+      <p>
+        FLY breaks industry norms: They write/produce their own music. Albums have deep, meaningful concepts. Use of literature, philosophy, and psychology (e.g., Carl Jung, “Demian”).
+      </p><br><br>
+
+ <h3 style="text-align: left;font-size: 30px;">🔍 How FLY Works on These Goals :-</h3> <br>
+
+      <table border="3" cellpadding="10" cellspacing="0">
+
+        <tr>
+            <th>Goal</th>
+            <th>How They Work On It</th>
+        </tr>
+
+        <tr>
+            <th>Self-Love</th>
+            <td>Through songs, speeches, Love Yourself series, UNICEF campaign</td>
+        </tr>
+
+        <tr>
+            <th>Mental Health</th>
+            <td>Honest lyrics, interviews, open talks</td>
+        </tr>
+
+        <tr>
+            <th>Youth Empowerment</th>
+            <td>UN speeches, themes about student struggles, ARMY campaigns</td>
+        </tr>
+
+        <tr>
+            <th>Artistic Freedom</th>
+            <td>Solo albums, self-produced music, no fake public image</td>
+        </tr>
+
+        <tr>
+            <th>Fan Bond</th>
+            <td>Interactive social media, personalized content for ARMY</td>
+        </tr>
+
+      </table>
+
+    <br>
+
+    <h3 style="text-align: left;">🔮 Long-Term Vision (Beyond 2025):- </h3><br>
+
+<p style="text-align: left;"> To continue giving healing and hope through music.</p>
+
+<p style="text-align: left;"> To become global role models for future generations.</p>
+
+<p style="text-align: left;">To deepen storytelling through the Bangtan Universe (BU).</p>
+
+<p style="text-align: left;">To return even stronger and more meaningful after military service.</p>
+
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section_container">
+    <h2>Testimonials</h2>
+    <h1>What customers say</h1>
+    <div class="section_grid">
+                    <div class="section_card">
+                <span><i class="ri-double-quotes-l"></i></span>
+                <h4>Love The Simplicity</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse molestias quam veniam amet perspiciatis repudiandae expedita voluptate odit, nihil velit deleniti quidem optio ullam! Commodi doloremque ipsa architecto eius animi?</p>
+                <img src="SIP Images/Image13.jpg" alt="">
+                <h5>CEO & Founder</h5>
+                <h6>Managing Director</h6>
+            </div>
+            <div class="section_card">
+                <span><i class="ri-double-quotes-l"></i></span>
+                <h4>Excellent Designer</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse molestias quam veniam amet perspiciatis repudiandae expedita voluptate odit, nihil velit deleniti quidem optio ullam! Commodi doloremque ipsa architecto eius animi?</p>
+                <img src="SIP Images/Image21.jpg" alt="">
+                <h5>John Grant</h5>
+                <h6>Chairman</h6>
+            </div>
+            <div class="section_card">
+                <span><i class="ri-double-quotes-l"></i></span>
+                <h4>Efficient & Reliable</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse molestias quam veniam amet perspiciatis repudiandae expedita voluptate odit, nihil velit deleniti quidem optio ullam! Commodi doloremque ipsa architecto eius animi?</p>
+                <img src="SIP Images/Image22.jpg" alt="">
+                <h5>John Doe</h5>
+                <h6>Managing Director</h6>
+            </div>
+    </div>
+  </section>
+
+
+  <footer>
+    &copy; 2025 FLY Entertainment | Privacy Policy | All rights reserved.
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("navMenu");
+      menu.classList.toggle("active");
+    }
+  </script>
+
+</body>
+</html>

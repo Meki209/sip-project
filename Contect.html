@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Page</title>
+
+  <!-- Font Awesome for Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background-color: #000;
+      color: white;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+ nav {
+      width: 100%;
+      background: #400004;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      width: 80px;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 30px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .menu {
+      display: flex;
+      gap: 15px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 8px 15px;
+    }
+   .menu a:nth-last-child(2),.menu label.logout-label {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 8px 15px;
+      border-radius: 5px;
+      background: #e74c3c;
+      cursor: pointer;
+    }
+
+    .menu a:hover,
+    .menu label.logout-label:hover {
+      background: aqua;
+      color: black;
+      transition: 0.4s;
+    }
+
+
+
+
+        /* Confirm box styles */
+    #confirm-toggle {
+      display: none;
+    }
+
+    .confirm-box {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    #confirm-toggle:checked + .confirm-box {
+      display: flex;
+    }
+
+    .confirm-content {
+      background: #400004;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .confirm-content p {
+      margin-bottom: 20px;
+    }
+
+    .confirm-buttons {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .confirm-buttons a,
+    .confirm-buttons label {
+      background: #e74c3c;
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .confirm-buttons label {
+      background: gray;
+    }
+
+    .confirm-buttons a:hover,
+    .confirm-buttons label:hover {
+      opacity: 0.8;
+    }
+
+    .menu a:hover {
+      background: aqua;
+      color: black;
+      border-radius: 5px;
+      transition: 0.4s;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #400004;
+        padding: 10px 0;
+      }
+
+      .menu.active {
+        display: flex;
+      }
+    }
+
+
+    .main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 120px;
+      padding-bottom: 40px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      max-width: 1000px;
+      width: 95%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(30, 30, 30, 0.8);
+      background: white;
+      color: #333;
+    }
+
+    .contact-info {
+      background: linear-gradient(135deg, #c339ea, #0704b2);
+      color: #fff;
+      padding: 40px 30px;
+      width: 40%;
+      min-width: 280px;
+    }
+
+    .contact-info h2 {
+      margin-bottom: 10px;
+    }
+
+    .contact-info p {
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .info-item i {
+      font-size: 18px;
+      margin-right: 10px;
+      color: #d45d31;
+    }
+
+    .social-icons {
+      margin-top: 30px;
+    }
+
+    .social-icons a {
+      margin-right: 15px;
+      color: #fff;
+      font-size: 20px;
+      background: #ff5f6d;
+      padding: 8px 10px;
+      border-radius: 100px;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      background: #fff;
+      color: #ff5f6d;
+    }
+
+    .contact-form {
+      background: #f4f4f4;
+      padding: 40px 30px;
+      width: 60%;
+    }
+
+    .contact-form h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .form-row input,
+    .contact-form textarea {
+      flex: 1 1 100%;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 12px;
+      background: #e0e0e0;
+      box-shadow: inset 2px 2px 5px #babec4, inset -2px -2px 5px #fff;
+      font-size: 14px;
+    }
+
+    .form-row input:only-child {
+      width: 100%;
+    }
+
+    .form-row input {
+      flex: 1 1 calc(50% - 7.5px);
+    }
+
+    .contact-form textarea {
+      height: 100px;
+      resize: none;
+      width: 100%;
+    }
+
+    .contact-form button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(to right, #37b9f0, #ff4b2b);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .contact-form button:hover {
+      opacity: 0.9;
+      background: linear-gradient(to right, #ff4b2b,#37b9f0);
+    }
+
+    footer {
+      background-color: #400000;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        margin: 0 auto;
+      }
+
+      .contact-info, .contact-form {
+        width: 100%;
+      }
+
+      .form-row input {
+        flex: 1 1 100%;
+      }
+
+      .contact-info {
+        text-align: center;
+      }
+
+      .info-item {
+        justify-content: center;
+      }
+
+      .social-icons {
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <!-- Header/Nav -->
+    <header>
+      <nav>
+        <div class="logo">
+          <img src="SIP Images/Image2.jpg" alt="FLY Logo">
+          
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <div class="menu" id="navMenu">
+          <a href="Home.html">Home</a>
+          <a href="History.html">History</a>
+          <a href="Gallery.html">Gallery</a>
+          <a href="About Us.html">About Us</a>
+          <a href="Contect.html">Contact</a>
+          <a href="Login And Regi.html">Login</a>
+          <!-- Logout using label and checkbox -->
+        <label for="confirm-toggle" class="logout-label">Logout</label>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hidden checkbox -->
+  <input type="checkbox" id="confirm-toggle" />
+
+  <!-- Confirm box -->
+  <div class="confirm-box">
+    <div class="confirm-content">
+      <p>Are you sure you want to logout?</p>
+      <div class="confirm-buttons">
+        <a href="Landing Page.html">Yes</a>
+        <label for="confirm-toggle">Cancel</label>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content -->
+    <div class="main">
+      <div class="container">
+        <div class="contact-info">
+          <h2>Contact Information</h2>
+          <p>Fill up the form and our Team will get back to you within 24 hours</p>
+
+          <div class="info-item"><i class="fas fa-phone"></i> Phone: +1235 2355 98</div>
+          <div class="info-item"><i class="fas fa-paper-plane"></i> Email: info@yoursite.com</div>
+          <div class="info-item"><i class="fas fa-globe"></i> Website: yoursite.com</div>
+
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h2>Send us a message</h2>
+          <form>
+            <div class="form-row">
+              <input type="text" placeholder="First Name" required>
+              <input type="text" placeholder="Last Name" required>
+            </div>
+            <div class="form-row">
+              <input type="email" placeholder="Mail" required>
+              <input type="text" placeholder="Mobile No." required>
+            </div>
+            <textarea placeholder="Write your message" required></textarea>
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      &copy; 2025 FLY Entertainment | Privacy Policy | All rights reserved.
+    </footer>
+  </div>
+
+  <!-- JavaScript for Menu -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("navMenu");
+      menu.classList.toggle("active");
+    }
+  </script>
+
+</body>
+</html>
